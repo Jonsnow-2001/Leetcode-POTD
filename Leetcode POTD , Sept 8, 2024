@@ -1,0 +1,81 @@
+725. Split Linked List in Parts
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+    int getLen(ListNode* head){
+        int cnt=0;
+
+        while(head){
+            cnt++; head=head->next;
+        }
+
+        return cnt;
+    }
+
+    vector<ListNode*> splitListToParts(ListNode* head, int p) {
+        int l=getLen(head), lp=l/p, m=l%p;
+
+        vector<ListNode*> ans(p);
+
+        ListNode* temp=head, *prev=NULL;
+
+        for(int i=0;i<p;i++){
+            
+            if(p>l){
+                ans[i]=temp;
+                prev=temp;
+                // if(ans[i])cout<<" ans[i]="<<ans[i]->val<<" i="<<i;
+                if(temp) temp=temp->next;
+                if(prev) prev->next=NULL;
+                // if(temp)cout<<" temp="<<temp->val<<" prev="<<prev->val;
+                if(!temp) break;
+            }
+
+            
+
+            else{
+                if(m>0){
+                    ans[i]=temp;
+                    
+                    for(int j=0;j<lp+1;j++){
+                        prev=temp;
+                        if(temp) temp=temp->next;
+                    }
+                    if(prev) prev->next=NULL;
+                    m--;
+                    
+                }
+
+                else {
+                    ans[i]=temp;
+                    
+                    for(int j=0;j<lp;j++){
+                        prev=temp;
+                        if(temp) temp=temp->next;
+                    }
+                    if(prev) prev->next=NULL;
+                    
+                }
+            }
+            if(!temp) break;
+        }
+
+        return ans;
+
+        
+
+
+    }
+};
