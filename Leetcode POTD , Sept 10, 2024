@@ -1,0 +1,55 @@
+2807. Insert Greatest Common Divisors in Linked List
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+
+    int getGcd(int a, int b){
+        if(a>b) swap(a,b);
+
+        if(!a || !b) return 1;
+        
+        int c=a;
+
+        while(a){
+            c=a;
+            a=b%a;
+            b=c;
+        }
+
+        return c;
+
+
+    }
+
+    ListNode* insertGreatestCommonDivisors(ListNode* head) {
+        if(!head->next) return head;
+
+        ListNode* prev=head, *curr=head->next;
+
+        while(curr){
+            int a=prev->val, b=curr->val;
+            int c=getGcd(a,b);
+
+            ListNode* temp=new ListNode(c);
+
+            prev->next=temp; temp->next=curr;
+
+            prev=curr; curr=curr->next;
+
+        }
+
+        return head;
+    }
+};
