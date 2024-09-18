@@ -1,0 +1,36 @@
+
+
+
+class Solution {
+public:
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        map<string,int> m;
+        vector<string> ans;
+
+        int l1=s1.length(), l2=s2.length();
+
+        for(int i=0;i<l1;i++){
+            int j=i+1;
+            while(j<l1 && s1[j]!=' ') j++;
+            string st=s1.substr(i,j-i);
+            
+            m[st]++;
+            i=j;
+        }
+        cout<<endl;
+        for(int i=0;i<l2;i++){
+            int j=i+1;
+            while(j<l2 && s2[j]!=' ') j++;
+            string st=s2.substr(i,j-i);
+            // cout<<" s2="<<st;
+            m[st]++;
+            i=j;
+        }
+
+        for(auto st:m){
+            if(st.second==1) ans.push_back(st.first);
+        }
+
+        return ans;
+    }
+};
