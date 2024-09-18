@@ -1,0 +1,33 @@
+class cmp{
+
+    public:
+
+    bool operator() (string &a, string &b){
+        return a+b<b+a;
+    }
+
+};
+
+
+class Solution {
+public:
+
+    
+
+    string largestNumber(vector<int>& nums) {
+        priority_queue<string, vector<string> , cmp> pq;
+
+        for(int n:nums) pq.push(to_string(n));
+
+        string ans="";
+
+        while(pq.size()){
+            ans+=pq.top();
+            pq.pop();
+        }
+
+        if(ans[0]=='0') return "0";
+
+        return ans;
+    }
+};
