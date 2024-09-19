@@ -1,0 +1,33 @@
+
+
+class Solution {
+public:
+    vector<int> diffWaysToCompute(string exp) {
+        int n=exp.length();
+        vector<int> ans;
+
+        if(n<=2) return {stoi(exp)};
+
+        for(int i=0;i<n;i++){
+            if(exp[i]=='+' || exp[i]=='-' || exp[i]=='*'){
+                vector<int> left, right;
+                int ind=i;
+
+                left=diffWaysToCompute(exp.substr(0,ind));
+                right=diffWaysToCompute(exp.substr(ind+1));
+
+                for(int j:left){
+                    for(int k:right){
+                        if(exp[ind]=='+') ans.push_back(j+k);
+                        else if(exp[ind]=='-') ans.push_back(j-k);
+                        else ans.push_back(j*k);
+                    }
+                }
+
+                
+            }
+        }
+
+        return ans;
+    }
+};
